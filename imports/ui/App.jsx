@@ -1,19 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
 
+import { Locations } from '../api/locations.js';
 import Location from './Location.jsx';
 
 // App component - represents the whole app
-export default class App extends Component {
-  getLocations() {
-    return [
-      { _id: 1, text: 'This is location 1' },
-      { _id: 2, text: 'This is location 2' },
-      { _id: 3, text: 'This is location 3' },
-    ];
-  }
-
+class App extends Component {
   renderLocations() {
-    return this.getLocations().map((location) => (
+    return this.props.locations.map((location) => (
       <Location key={location._id} location={location} />
     ));
   }
@@ -32,3 +26,13 @@ export default class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  locations: PropTypes.array.isRequired,
+};
+
+export default createContainer(() => {
+  return {
+    locations: Locations.find({}).fetch(),
+  };
+}, App);

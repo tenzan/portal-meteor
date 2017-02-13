@@ -4,7 +4,7 @@ import React, { Component, PropTypes } from 'react';
 export default class Location extends Component {
   render() {
     return (
-      <li>{this.props.location.text}</li>
+      <li>{this.props.location.name}</li>
     );
   }
 }
